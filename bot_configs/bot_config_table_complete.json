@@ -1,0 +1,42 @@
+{ 
+    "bot_name": "Bot Sample - Table Completeness", 
+    "description": "Bot to check for Title, Description", 
+    "conn_type": {
+        "sf": 
+        {
+            "otype": "TABLE", 
+            "aa_query": "SELECT * FROM public.rdbms_tables WHERE deleted = False", 
+            "last_etl": "SELECT last_load_time from information_schema.load_history where table_name = 'STG_RDBMS_TABLES' ORDER BY last_load_time DESC LIMIT 1"
+        } 
+    }, 
+    "create_policy": true, 
+    "rules": [ 
+        { 
+            "fields_to_check": [ 
+                {
+                    "Description": {
+                        "condition": "IS NULL",
+                        "field_type": "RICH_TEXT"
+                    }
+                }, 
+                {
+                    "Title": {
+                        "condition": "IS NULL",
+                        "field_type": "TEXT"
+                    }
+                } 
+            ], 
+            "fields_to_check_operator": "or", 
+            "notification": { 
+                "type": "slack", 
+                "subject": "Table Completeness", 
+                "frequency": "always", 
+                "to": [ 
+                    "benjamin.ng@alation.com", 
+                    "gene.arnold@alation.com" 
+                ], 
+                "channel": "bot-auto-notification" 
+            } 
+        } 
+    ] 
+}

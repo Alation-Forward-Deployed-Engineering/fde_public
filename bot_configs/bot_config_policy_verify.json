@@ -1,0 +1,24 @@
+{
+        "bot_name": "Bot Sample - Verified Policy", 
+        "description": "Bot to check if policy has been verified within a time range",
+        "conn_type": {
+                        "sf":{
+                            "otype": "BUSINESS_POLICY",
+                            "custom_template_name": "Compliance",
+                            "aa_query": "SELECT *, DATEDIFF(day, verified_date::DATE, CURRENT_DATE) as date_span FROM public.business_policy WHERE policy_type_name = 'Compliance' AND  deleted = False",
+                            "last_etl": "SELECT last_load_time from information_schema.load_history WHERE table_name = 'STG_BUSINESS_POLICY' ORDER BY last_load_time DESC LIMIT 1"
+                        }
+                  },
+    "create_policy": true,
+    "rules": [
+        {
+            "properties_to_check": [
+                {"date_span":{"condition":"GREATER THAN", "value":"120", "field_type":  "TEXT"}}
+            ],
+            "notification": {"type": "conversation",
+                             "subject": "Policy must be verified!",
+                             "frequency": "always",
+                             "to": [{"user": 2}]}
+        }
+    ]
+}

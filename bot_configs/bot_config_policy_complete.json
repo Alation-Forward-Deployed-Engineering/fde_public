@@ -1,0 +1,23 @@
+{
+    "bot_name":"Bot Sample - Checking Policy Completeness",
+    "description":"Policy Bot used to check for Policy completeness",
+    "conn_type": {"sf":
+                    { "otype": "BUSINESS_POLICY",
+                      "custom_template_name": "Test Policy",
+                     "aa_query":"SELECT * FROM business_policy WHERE policy_type_name = 'Test Policy' AND deleted = False",
+                     "last_etl":"SELECT last_load_time from information_schema.load_history WHERE table_name = 'STG_BUSINESS_POLICY' ORDER BY last_load_time DESC LIMIT 1"
+                    }
+    },
+    "create_policy": true,
+    "rules":[
+        {
+            "fields_to_check":[
+                        {"Description":{"condition":"IS NULL", "field_type":  "RICH_TEXT"}}
+                    ],
+            "notification": {"type": "conversation",
+                            "subject": "Policy Not Complete",
+                            "frequency": "always",
+                            "to": [{"user": 2}]}
+        }
+    ]
+}

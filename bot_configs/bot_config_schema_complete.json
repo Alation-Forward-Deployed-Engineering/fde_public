@@ -1,0 +1,25 @@
+{
+    "bot_name":"Bot Sample - Schema Completeness",
+    "description":"Bot to check for Title, Description, Domain",
+    "conn_type": {"sf":
+                    {"otype": "SCHEMA",
+                     "aa_query":"SELECT * FROM public.rdbms_schemas WHERE deleted = False AND EXCLUDED = False",
+                     "last_etl":"SELECT last_load_time from information_schema.load_history where table_name = 'STG_RDBMS_SCHEMAS' ORDER BY last_load_time DESC LIMIT 1"}
+    },
+    "create_policy": true,
+    "rules": [
+        {
+            "fields_to_check":[
+                {"Description":{"condition":"IS NULL", "field_type":  "RICH_TEXT"}},
+                {"Title":{"condition":"IS NULL", "field_type": "TEXT"}}
+            ],
+            "fields_to_check_operator": "or",
+            "notification": {
+                "type": "conversation",
+                "subject": "Schema Completeness",
+                "frequency": "always",
+                "to": [{"user": 2}]
+            }
+        }
+    ]
+}

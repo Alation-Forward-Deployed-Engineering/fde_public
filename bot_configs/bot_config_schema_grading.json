@@ -1,0 +1,36 @@
+{
+    "bot_name":"Bot Sample - Schema Grading Test",
+    "description":"Grading the curation level of schemas",
+    "conn_type": {"sf":
+                    {"otype": "SCHEMA",
+                    "aa_query":"SELECT *, ((CASE WHEN CUST_FIELD_1 IS NULL THEN 1 ELSE 0 END) + (CASE WHEN CUST_FIELD_2 IS NULL THEN 1 ELSE 0 END) + (CASE WHEN CUST_FIELD_3 IS NULL THEN 1 ELSE 0 END) + (CASE WHEN CUST_FIELD_4 IS NULL THEN 1 ELSE 0 END) + (CASE WHEN CUST_FIELD_5 IS NULL THEN 1 ELSE 0 END) + (CASE WHEN CUST_FIELD_6 IS NULL THEN 1 ELSE 0 END) + (CASE WHEN CUST_FIELD_7 IS NULL THEN 1 ELSE 0 END) + (CASE WHEN CUST_FIELD_8 IS NULL THEN 1 ELSE 0 END) + (CASE WHEN CUST_FIELD_9 IS NULL THEN 1 ELSE 0 END) + (CASE WHEN CUST_FIELD_10 IS NULL THEN 1 ELSE 0 END)) AS grade FROM public.rdbms_schemas WHERE deleted = 'false'",
+                    "last_etl":"SELECT last_load_time from information_schema.load_history where table_name = 'STG_RDBMS_SCHEMAS' ORDER BY last_load_time DESC LIMIT 1"}
+    },
+    "create_policy": false,
+    "rules": [
+        {
+            "properties_to_check":[
+                {"grade":{"condition":"LESS THAN", "value":"1", "field_type":"TEXT"}}
+            ],
+            "actions_to_perform":[
+                        {"Curation Grade":{"action":"ADD","field_type": "PICKER", "values":["Gold"]}}
+                    ]
+        },
+        {
+            "properties_to_check":[
+                {"grade":{"condition":"LESS THAN", "value":"6", "field_type":"TEXT"}}
+            ],
+            "actions_to_perform":[
+                        {"Curation Grade":{"action":"ADD","field_type": "PICKER", "values":["Silver"]}}
+                    ]
+        },
+        {
+            "properties_to_check":[
+                {"grade":{"condition":"GREATER THAN", "value":"6", "field_type":"TEXT"}}
+            ],
+            "actions_to_perform":[
+                        {"Curation Grade":{"action":"ADD","field_type": "PICKER", "values":["Bronze"]}}
+                    ]
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+{
+    "bot_name": "Bot Sample - Table Metadata Change", 
+    "description": "Bot to check when the metadata of a table has changed)",
+    "conn_type": {"sf":
+                      {"otype": "ATTRIBUTE",
+                       "aa_query": "SELECT *, DATEDIFF(day, TS_CREATED::DATE, CURRENT_DATE) as date_span FROM public.rdbms_columns WHERE deleted = False",
+                       "last_etl": "SELECT last_load_time from information_schema.load_history where table_name = 'STG_RDBMS_COLUMNS' ORDER BY last_load_time DESC LIMIT 1"}
+                  },
+    "create_policy": true,
+    "rules": [
+        {
+            "properties_to_check": [
+                {"date_span":{"condition":"LESS THAN", "value":"5", "field_type":  "TEXT"}}
+            ],
+            "notification": {"type": "conversation",
+                             "subject": "This is a new column added to your database",
+                             "frequency": "always",
+                             "to": [{"user": 2}]}
+        }
+    ]
+}
