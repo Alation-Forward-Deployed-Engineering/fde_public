@@ -1,0 +1,36 @@
+{
+    "bot_name":"Bot Sample - Term Cust Field Curation Setter",
+    "description":"Policy Bot used to set the curation custom field to no if it is null",
+    "conn_type": {"sf":
+                    { "otype": "TERM",
+                      "custom_template_name": "Business Term",
+                     "aa_query":"SELECT * FROM terms WHERE term_type_name = 'Business Term' AND deleted = False",
+
+                     "last_etl":"SELECT last_load_time from information_schema.load_history WHERE table_name = 'STG_TERMS' ORDER BY last_load_time DESC LIMIT 1"
+                    }
+    },
+    "create_policy": false,
+    "rules":[
+        {
+            "fields_to_check":[
+                        {"Certified":{"condition":"IS NOT NULL", "field_type":  "PICKER"}},
+                        {"Phase One":{"condition":"IS NOT NULL", "field_type":  "PICKER"}},
+                        {"Phase Two":{"condition":"IS NOT NULL", "field_type":  "PICKER"}},
+                        {"Phase Three":{"condition":"IS NOT NULL", "field_type":  "PICKER"}},
+                        {"Curated":{"condition":"IS NULL", "field_type":  "PICKER"}}
+                    ],
+            "fields_to_check_operator": "and",
+            "actions_to_perform":[
+                {"Curated":{"action":"ADD","field_type": "PICKER", "values":["Yes"]}}
+            ]
+        },
+        {
+            "fields_to_check":[
+                        {"Curated":{"condition":"IS NULL", "field_type":  "PICKER"}}
+                    ],
+            "actions_to_perform":[
+                {"Curated":{"action":"ADD","field_type": "PICKER", "values":["No"]}}
+            ]
+        }
+    ]
+}

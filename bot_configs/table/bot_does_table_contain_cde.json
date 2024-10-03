@@ -1,0 +1,20 @@
+{
+    "bot_name": "Bot Sample - Does table column(s) contain critical data", 
+    "description": "Check all columns in table and see if any column is flagged for critical data",
+    "conn_type": {"sf":
+                      {"otype": "TABLE",
+                       "aa_query": "SELECT t.table_id, t.schema_id, t.ds_id, t.name,CASE WHEN EXISTS (SELECT 1 FROM rdbms_columns c WHERE c.deleted = 'false' AND c.table_id = t.table_id AND c.contains_critical_data = '{Yes}') THEN 'Yes' ELSE 'No' END AS contains_cda FROM rdbms_tables t WHERE t.deleted = 'false'",
+                       "last_etl": "SELECT last_load_time from information_schema.load_history where table_name = 'STG_RDBMS_TABLES' ORDER BY last_load_time DESC LIMIT 1"}
+                  },
+    "create_policy": false,
+    "rules": [
+        {
+            "properties_to_check": [
+                {"contains_cda":{"condition":"CONTAINS", "value":"Yes", "field_type":  "TEXT"}}
+            ],
+            "actions_to_perform":[
+                        {"Contains Critical Data":{"action":"ADD","field_type": "PICKER", "values":["Yes"]}}
+                    ]
+        }
+    ]
+}

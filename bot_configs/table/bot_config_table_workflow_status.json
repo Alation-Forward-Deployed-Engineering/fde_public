@@ -1,0 +1,35 @@
+{
+  "bot_name": "Bot Sample - Table Workflow Status",
+  "description": "Checking to see how long a workflow suggestion has been set to in_progress",
+  "conn_type": {
+    "sf": {
+      "otype": "TABLE",
+      "aa_query": "SELECT object_id as table_id,public.rdbms_tables.name, DATEDIFF('day',public.workflow_requests.ts_created, CURRENT_DATE()) AS count_days_req_open FROM public.workflow_requests INNER JOIN public.rdbms_tables ON public.workflow_requests.object_id=public.rdbms_tables.id WHERE public.workflow_requests.request_status IN ('in_progress')",
+      "last_etl": "SELECT last_load_time from information_schema.load_history where table_name = 'STG_RDBMS_TABLES' ORDER BY last_load_time DESC LIMIT 1"
+    }
+  },
+  "create_policy": true,
+  "rules": [
+    {
+      "properties_to_check": [
+        {
+          "count_days_req_open": {
+            "condition": "GREATER THAN",
+            "value": "0",
+            "field_type": "TEXT"
+          }
+        }
+      ],
+      "notification": {
+        "type": "conversation",
+        "subject": "Table Workflow Status",
+        "frequency": "always",
+        "to": [
+          {
+            "user": 8
+          }
+        ]
+      }
+    }
+  ]
+}

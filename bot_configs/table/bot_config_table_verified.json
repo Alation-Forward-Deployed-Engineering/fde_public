@@ -1,0 +1,32 @@
+{
+        "bot_name": "Bot Sample - Verified Table", 
+        "description": "Bot to check if table has been verified within a time range",
+        "conn_type": {
+                        "sf":{
+                            "otype": "TABLE",
+                            "aa_query": "SELECT *, DATEDIFF(day, LAST_UPDATED::DATE, CURRENT_DATE) as date_span FROM PUBLIC.RDBMS_TABLES WHERE deleted = False",
+                            "last_etl": "SELECT last_load_time from information_schema.load_history WHERE table_name = 'STG_RDBMS_TABLES' ORDER BY last_load_time DESC LIMIT 1"
+                        }
+                  },
+    "create_policy": true,
+    "rules": [
+        {
+            "properties_to_check": [
+                {"date_span":{"condition":"IS NULL", "field_type":  "TEXT"}}
+            ],
+            "notification": {"type": "conversation",
+                             "subject": "Table must be verified!",
+                             "frequency": "always",
+                             "to": [{"user": 8}]}
+        },
+        {
+            "properties_to_check": [
+                {"date_span":{"condition":"GREATER THAN", "value":"365", "field_type":  "TEXT"}}
+            ],
+            "notification": {"type": "conversation",
+                             "subject": "Table must be verified!",
+                             "frequency": "always",
+                             "to": [{"user": 8}]}
+        }
+    ]
+}
