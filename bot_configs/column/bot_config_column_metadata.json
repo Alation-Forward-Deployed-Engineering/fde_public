@@ -1,5 +1,5 @@
 {
-    "bot_name": "Bot Sample - Table Metadata Change", 
+    "bot_name": "Bot Sample - Column Metadata Change", 
     "description": "Bot to check when the metadata of a table has changed)",
     "conn_type": {"sf":
                       {"otype": "ATTRIBUTE",
