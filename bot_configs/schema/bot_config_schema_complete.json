@@ -1,6 +1,6 @@
 {
     "bot_name":"Bot Sample - Schema Completeness",
-    "description":"Bot to check for Title, Description, Domain",
+    "description":"Bot to check schemas for Title and Description",
     "conn_type": {"sf":
                     {"otype": "SCHEMA",
                      "aa_query":"SELECT * FROM public.rdbms_schemas WHERE deleted = False AND EXCLUDED = False",

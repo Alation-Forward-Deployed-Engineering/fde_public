@@ -1,6 +1,6 @@
 {
     "bot_name": "Bot Sample - Schema Ownership", 
-    "description": "Bot to check for without Steward(s) or Data Owner(s)",
+    "description": "Bot to check for schemas without Steward(s) or Data Owner(s)",
     "conn_type": {"sf":
                     {"otype": "SCHEMA",
                        "aa_query": "SELECT * FROM public.rdbms_schemas WHERE deleted = False",
@@ -18,7 +18,7 @@
             "notification": {"type": "conversation",
                              "subject": "Schemas without Steward(s) or Data Owner(s)",
                              "frequency": "always",
-                             "to": [{"user": 65}]}
+                             "to": [{"user": 2}]}
         }
     ]
 }

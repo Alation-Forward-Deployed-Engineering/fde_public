@@ -1,10 +1,10 @@
 {
-    "bot_name": "Bot Sample - Table Ownership", 
-    "description": "Bot to check for tables without Steward(s) or Data Owner(s)",
+    "bot_name": "Bot Sample - Column Ownership",
+    "description": "Bot to check for columns without Steward(s) or Data Owner(s)",
     "conn_type": {"sf":
-                      {"otype": "TABLE",
-                       "aa_query": "SELECT * FROM public.rdbms_tables WHERE deleted = False",
-                       "last_etl": "SELECT last_load_time from information_schema.load_history where table_name = 'STG_RDBMS_TABLES' ORDER BY last_load_time DESC LIMIT 1"}
+                      {"otype": "DATA",
+                       "aa_query": "SELECT * FROM public.rdbms_columns WHERE deleted = False",
+                       "last_etl": "SELECT last_load_time from information_schema.load_history where table_name = 'STG_RDBMS_COLUMNS' ORDER BY last_load_time DESC LIMIT 1"}
                   },
     "create_policy": true,
     "rules": [
@@ -15,7 +15,7 @@
             ],
             "fields_to_check_operator":"or",
             "notification": {"type": "conversation",
-                             "subject": "Schemas without Steward(s) or Data Owner(s)",
+                             "subject": "Column without Steward(s) or Data Owner(s)",
                              "frequency": "always",
                              "to": [{"user": 2}]}
         }

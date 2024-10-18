@@ -1,6 +1,6 @@
 { 
     "bot_name": "Bot Sample - Table Completeness", 
-    "description": "Bot to check for Title, Description", 
+    "description": "Bot to check tables for Title and Description", 
     "conn_type": {
         "sf": 
         {

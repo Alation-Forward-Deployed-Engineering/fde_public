@@ -1,6 +1,6 @@
 {
     "bot_name":"Bot Sample - Data Sources Completeness",
-    "description":"Bot to check for Title, Description",
+    "description":"Bot to check data sources for Title and Description",
     "conn_type": {"sf":
                     {"otype": "DATA",
                      "aa_query":"SELECT * FROM public.rdbms_datasources WHERE deleted = False",
@@ -16,7 +16,7 @@
             "fields_to_check_operator": "or",
             "notification": {
                 "type": "conversation",
-                "subject": "Data Sources Completeness",
+                "subject": "Data Source Completeness",
                 "frequency": "always",
                 "to": [{"user": 2}]
             }

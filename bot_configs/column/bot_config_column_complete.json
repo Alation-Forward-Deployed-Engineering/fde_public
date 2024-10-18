@@ -1,6 +1,6 @@
 {
     "bot_name":"Bot Sample - Column Completeness",
-    "description":"Bot to check for Title, Description",
+    "description":"Bot to check columns for Title and Description",
     "conn_type": {"sf":
                     {"otype": "DATA",
                      "aa_query":"SELECT * FROM public.rdbms_columns WHERE deleted = False AND EXCLUDED = False",
@@ -16,7 +16,7 @@
             "fields_to_check_operator": "or",
             "notification": {
                 "type": "conversation",
-                "subject": "Data Sources Completeness",
+                "subject": "Column Completeness",
                 "frequency": "always",
                 "to": [{"user": 2}]
             }

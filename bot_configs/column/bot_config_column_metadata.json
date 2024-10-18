@@ -1,6 +1,6 @@
 {
-    "bot_name": "Bot Sample - Column Metadata Change", 
-    "description": "Bot to check when the metadata of a table has changed)",
+    "bot_name": "Bot Sample - Column Added to database", 
+    "description": "Bot to check when a column has been added to your database)",
     "conn_type": {"sf":
                       {"otype": "ATTRIBUTE",
                        "aa_query": "SELECT *, DATEDIFF(day, TS_CREATED::DATE, CURRENT_DATE) as date_span FROM public.rdbms_columns WHERE deleted = False",
@@ -13,7 +13,7 @@
                 {"date_span":{"condition":"LESS THAN", "value":"5", "field_type":  "TEXT"}}
             ],
             "notification": {"type": "conversation",
-                             "subject": "This is a new column added to your database",
+                             "subject": "There is a new column added to your database within the last 5 days",
                              "frequency": "always",
                              "to": [{"user": 2}]}
         }

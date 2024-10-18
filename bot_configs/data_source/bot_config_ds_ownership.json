@@ -1,6 +1,6 @@
 {
     "bot_name": "Bot Sample - Data Source Ownership",
-    "description": "Bot to check for without Steward(s) or Data Owner(s)",
+    "description": "Bot to check for data sources without Steward(s) or Data Owner(s)",
     "conn_type": {"sf":
                       {"otype": "DATA",
                        "aa_query": "SELECT * FROM public.rdbms_datasources WHERE deleted = False",
@@ -15,7 +15,7 @@
             ],
             "fields_to_check_operator":"or",
             "notification": {"type": "conversation",
-                             "subject": "Schemas without Steward(s) or Data Owner(s)",
+                             "subject": "Data Source without Steward(s) or Data Owner(s)",
                              "frequency": "always",
                              "to": [{"user": 2}]}
         }

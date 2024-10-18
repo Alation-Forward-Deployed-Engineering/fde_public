@@ -1,6 +1,6 @@
 {
     "bot_name":"Bot Sample - Term Cust Field Curation Setter",
-    "description":"Policy Bot used to set the curation custom field to no if it is null",
+    "description":"Policy Bot used to set the curation custom field based on curation of other fields",
     "conn_type": {"sf":
                     { "otype": "TERM",
                       "custom_template_name": "Business Term",
