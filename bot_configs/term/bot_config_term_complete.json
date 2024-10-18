@@ -1,5 +1,5 @@
 {
-    "bot_name":"Bot - Check Term Completeness",
+    "bot_name":"Bot Sample - Check Term Completeness",
     "description":"Policy Bot used to check for term completeness",
     "conn_type": {"sf":
                     { "otype": "TERM",
