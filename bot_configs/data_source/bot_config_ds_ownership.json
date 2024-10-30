@@ -3,7 +3,7 @@
     "description": "Bot to check for data sources without Steward(s) or Data Owner(s)",
     "conn_type": {"sf":
                       {"otype": "DATA",
-                       "aa_query": "SELECT * FROM public.rdbms_datasources WHERE deleted = False",
+                       "aa_query": "SELECT * FROM public.rdbms_datasources WHERE deleted = False and deployment_setup_complete = true",
                        "last_etl": "SELECT last_load_time from information_schema.load_history where table_name = 'STG_RDBMS_DATASOURCES' ORDER BY last_load_time DESC LIMIT 1"}
                   },
     "create_policy": true,
