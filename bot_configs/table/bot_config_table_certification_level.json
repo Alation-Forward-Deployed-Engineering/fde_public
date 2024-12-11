@@ -1,0 +1,80 @@
+{
+    "bot_name": "Table Certified Status",
+    "description": "Policy Bot used to add a certified badge to table",
+    "conn_type": {
+      "sf": {
+        "otype": "TABLE",
+        "aa_query": "SELECT * FROM public.rdbms_tables WHERE deleted = false AND EXCLUDED = False",
+        "last_etl": "SELECT last_load_time from information_schema.load_history WHERE table_name = 'STG_RDBMS_TABLES' ORDER BY last_load_time DESC LIMIT 1"
+      }
+    },
+    "create_policy": false,
+    "rules": [
+      {
+        "fields_to_check": [
+          {
+            "Certified": {
+              "condition": "CONTAINS",
+              "value": "Gold",
+              "field_type": "PICKER"
+            }
+          }
+        ],
+        "actions_to_perform": [
+          {
+            "Certified Level": {
+              "action": "ADD",
+              "field_type": "RICH_TEXT",
+              "values": [
+                "<p><img class='fr-fic fr-dib' src='/media/image_bank/2024-12-11-15-50-36-263702-00-00-170491a5-80c5-403b-a68f-c369f116e305.png' style='width: 160px;''></p>"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "fields_to_check": [
+          {
+            "Certified": {
+              "condition": "CONTAINS",
+              "value": "Silver",
+              "field_type": "PICKER"
+            }
+          }
+        ],
+        "actions_to_perform": [
+          {
+            "Certified Level": {
+              "action": "ADD",
+              "field_type": "RICH_TEXT",
+              "values": [
+                "<p><img class='fr-fic fr-dib' src='/media/image_bank/2024-12-11-15-50-43-149168-00-00-90898dea-e32f-4bf2-8c1a-28646cd34c78.png' style='width: 160px;''></p>"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "fields_to_check": [
+          {
+            "Certified": {
+              "condition": "CONTAINS",
+              "value": "Bronze",
+              "field_type": "PICKER"
+            }
+          }
+        ],
+        "actions_to_perform": [
+          {
+            "Certified Level": {
+              "action": "ADD",
+              "field_type": "RICH_TEXT",
+              "values": [
+                "<p><img class='fr-fic fr-dib' src='/media/image_bank/2024-12-11-15-50-27-147569-00-00-915553c2-e4ba-4ded-9bb7-425fa413736c.png' style='width: 160px;''></p>"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }

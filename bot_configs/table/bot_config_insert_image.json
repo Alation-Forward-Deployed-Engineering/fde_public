@@ -1,0 +1,36 @@
+{
+    "bot_name": "Certified Image",
+    "description": "Policy Bot used to add a certified badge to table",
+    "conn_type": {
+      "sf": {
+        "otype": "TABLE",
+        "aa_query": "SELECT * FROM public.rdbms_tables WHERE deleted = false AND EXCLUDED = False",
+        "last_etl": "SELECT last_load_time from information_schema.load_history WHERE table_name = 'STG_RDBMS_TABLES' ORDER BY last_load_time DESC LIMIT 1"
+      }
+    },
+    "create_policy": false,
+    "rules": [
+      {
+        "fields_to_check": [
+          {
+            "Certified": {
+              "condition": "CONTAINS",
+              "value": "Yes",
+              "field_type": "PICKER"
+            }
+          }
+        ],
+        "actions_to_perform": [
+          {
+            "Certified Level": {
+              "action": "ADD",
+              "field_type": "RICH_TEXT",
+              "values": [
+                "<p><img class='fr-fic fr-dib' src='/media/image_bank/2024-12-10-19-59-50-637882-00-00-0622c74f-83fd-40b0-a768-7fda448da021.jpg' style='width: 300px;''></p>"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
