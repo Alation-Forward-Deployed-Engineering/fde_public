@@ -1,0 +1,48 @@
+{ 
+    "bot_name": "Top 25 Tables Completeness by Popularity", 
+    "description": "Bot to check tables for Title and Description", 
+    "conn_type": {
+        "sf": 
+        {
+            "otype": "TABLE", 
+            "aa_query": "SELECT TOP 25 t.ID AS table_id, t.name, t.DS_ID, t.TITLE AS TITLE, t.DESCRIPTION AS DESCRIPTION, p.popularity FROM public.rdbms_tables t LEFT JOIN public.popularity p ON t.table_id = p.object_id AND p.object_type = 'table' WHERE t.DELETED = FALSE AND LENGTH(TRIM(t.TITLE)) = 0 AND LENGTH(TRIM(t.DESCRIPTION)) = 0 AND t.DS_ID != 1 AND p.popularity IS NOT NULL AND t.DS_ID != 1 ORDER BY p.popularity DESC;", 
+            "last_etl": "SELECT last_load_time from information_schema.load_history where table_name = 'STG_RDBMS_TABLES' ORDER BY last_load_time DESC LIMIT 1"
+        } 
+    }, 
+    "create_policy": true, 
+    "rules": [ 
+        { 
+            "fields_to_check": [ 
+                {
+                    "Description": {
+                        "condition": "IS NULL",
+                        "field_type": "RICH_TEXT"
+                    }
+                }, 
+                {
+                    "Title": {
+                        "condition": "IS NULL",
+                        "field_type": "TEXT"
+                    }
+                } 
+            ], 
+            "fields_to_check_operator": "or", 
+            "notification": {"type": "conversation",
+                             "subject": "Tables are not complete",
+                             "frequency": "always",
+                             "to": [{"user": 2}]
+                            }
+                        
+        } 
+    ] 
+}
+
+
+
+
+
+
+
+
+
+SELECT TOP 25 t.ID, t.name, t.DS_ID, p.popularity FROM public.rdbms_tables t LEFT JOIN public.popularity p ON t.table_id = p.object_id AND p.object_type = 'table' WHERE t.DELETED = FALSE AND p.popularity IS NOT NULL AND t.DS_ID != 1 ORDER BY p.popularity DESC
