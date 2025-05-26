@@ -23,10 +23,17 @@
             "properties_to_check": [
                 {"date_span":{"condition":"GREATER THAN", "value":"365", "field_type":  "TEXT"}}
             ],
-            "notification": {"type": "conversation",
-                             "subject": "Table must be verified!",
-                             "frequency": "always",
-                             "to": [{"user": 8}]}
+            "notification": {
+               "type": "conversation",
+               "subject": "Table must be verified!",
+               "frequency": "always",
+               "to": [
+                  {
+                    "column": "steward"
+                  }
+                ],
+                "default": [{"user": 2}]
+            }
         }
     ]
 }

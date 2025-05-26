@@ -26,9 +26,10 @@
         "frequency": "always",
         "to": [
           {
-            "user": 8
+            "column": "steward"
           }
-        ]
+        ],
+        "default": [{"user": 2}]
       }
     }
   ]

@@ -5,7 +5,7 @@
         "sf": 
         {
             "otype": "TABLE", 
-            "aa_query": "SELECT * FROM public.rdbms_tables WHERE deleted = False", 
+            "aa_query": "WITH tmp_people AS (\\n    SELECT \\n        table_id,\\n        SPLIT_PART(f.value::STRING, '_', 1) AS people_otype,\\n        TRY_TO_NUMBER(SPLIT_PART(f.value::STRING, '_', 2)) AS people_oid\\n    FROM public.rdbms_tables,\\n    LATERAL FLATTEN(input => steward) AS f -- Flatten the steward array\\n    -- steward_value is the alias for flattened values\\n    WHERE f.value IS NOT NULL AND f.value != ''\\n),\\n\\n-- Aggregate email by table_id\\nprocessed_people_set AS (\\n    SELECT \\n        TP.table_id, \\n        ARRAY_AGG(USR.user_email) AS steward\\n    FROM tmp_people TP\\n    JOIN public.users USR ON TP.people_oid = USR.user_id\\n    WHERE TP.people_otype = 'user'\\n    GROUP BY TP.table_id\\n)\\n\\n-- Final SELECT\\nSELECT \\n    PPS.steward, \\n    RT.table_id, \\n    RT.title, \\n    RT.description\\nFROM public.rdbms_tables RT\\nLEFT JOIN processed_people_set PPS ON RT.table_id = PPS.table_id and RT.steward is not null;",
             "last_etl": "SELECT last_load_time from information_schema.load_history where table_name = 'STG_RDBMS_TABLES' ORDER BY last_load_time DESC LIMIT 1"
         } 
     }, 
@@ -30,8 +30,13 @@
             "notification": { 
                 "type": "slack", 
                 "subject": "Table Completeness", 
-                "frequency": "always", 
-                "to": [ 
+                "frequency": "always",
+                "to": [
+                    {
+                        "column": "steward"
+                    }
+                ],
+                "default": [
                     "benjamin.ng@alation.com", 
                     "gene.arnold@alation.com" 
                 ], 

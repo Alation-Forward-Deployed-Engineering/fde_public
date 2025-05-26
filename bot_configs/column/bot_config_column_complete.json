@@ -18,7 +18,12 @@
                 "type": "conversation",
                 "subject": "Column Completeness",
                 "frequency": "always",
-                "to": [{"user": 2}]
+                "to": [
+                  {
+                    "column": "steward"
+                  }
+                ],
+                "default": [{"user": 2}]
             }
         }
     ]

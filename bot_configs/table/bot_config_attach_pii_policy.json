@@ -18,10 +18,17 @@
             "actions_to_perform":[
                         {"Business Policy":{"action":"ADD","field_type": "OBJECT_SET", "values":["business_policy_24"]}}
                     ],
-            "notification": {"type": "conversation",
-                            "subject": "Attach PII Policy to required tables",
-                            "frequency": "always",
-                            "to": [{"user": 2}]}
+            "notification": {
+              "type": "conversation",
+              "subject": "Attach PII Policy to required tables",
+              "frequency": "always",
+              "to": [
+                  {
+                    "column": "steward"
+                  }
+                ],
+              "default": [{"user": 2}]
+            }
         }
     ]
 }

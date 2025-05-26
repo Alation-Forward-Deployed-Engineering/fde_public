@@ -12,10 +12,17 @@
             "properties_to_check": [
                 {"date_span":{"condition":"LESS THAN", "value":"5", "field_type":  "TEXT"}}
             ],
-            "notification": {"type": "conversation",
-                             "subject": "There is a new column added to your database within the last 5 days",
-                             "frequency": "always",
-                             "to": [{"user": 2}]}
+            "notification": {
+              "type": "conversation",
+              "subject": "There is a new column added to your database within the last 5 days",
+              "frequency": "always",
+              "to": [
+                  {
+                    "column": "steward"
+                  }
+              ],
+              "default": [{"user": 2}]
+            }
         }
     ]
 }

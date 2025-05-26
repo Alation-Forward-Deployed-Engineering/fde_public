@@ -27,11 +27,17 @@
                 } 
             ], 
             "fields_to_check_operator": "or", 
-            "notification": {"type": "conversation",
-                             "subject": "Tables are not complete",
-                             "frequency": "always",
-                             "to": [{"user": 2}]
-                            }
+            "notification": {
+                 "type": "conversation",
+                 "subject": "Tables are not complete",
+                 "frequency": "always",
+                 "to": [
+                      {
+                        "column": "steward"
+                      }
+                    ],
+                "default": [{"user": 2}]
+            }
                         
         } 
     ] 
