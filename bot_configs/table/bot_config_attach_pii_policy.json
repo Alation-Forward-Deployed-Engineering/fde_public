@@ -3,7 +3,7 @@
     "description":"Policy Bot used to detect, Varified PII and not have a PII Policy attached.",
     "conn_type": {"sf":
                     { "otype": "TABLE",
-                     "aa_query":"SELECT * FROM public.rdbms_tables WHERE deleted = False AND EXCLUDED = False",
+                     "aa_query":"SELECT *, 'business_policy_24' as policy FROM public.rdbms_tables WHERE deleted = False AND EXCLUDED = False",
                      "last_etl":"SELECT last_load_time from information_schema.load_history WHERE table_name = 'STG_RDBMS_TABLES' ORDER BY last_load_time DESC LIMIT 1"
                     }
     },
@@ -16,7 +16,7 @@
                     ],
             "fields_to_check_operator": "and",
             "actions_to_perform":[
-                        {"Business Policy":{"action":"ADD","field_type": "OBJECT_SET", "values":["business_policy_24"]}}
+                        {"Business Policy":{"action":"ADD","field_type": "OBJECT_SET", "values":[{"column":  "policy"}]}}
                     ],
             "notification": {
               "type": "conversation",
