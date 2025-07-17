@@ -22,10 +22,17 @@
             "actions_to_perform":[
                 {"Curated":{"action":"ADD","field_type": "PICKER", "values":["No"]}}
             ],
-            "notification": {"type": "conversation",
-                            "subject": "Term not curated",
-                            "frequency": "always",
-                            "to": [{"user": 2}]}
+            "notification": {
+              "type": "conversation",
+              "subject": "Term not curated",
+              "frequency": "always",
+              "to": [
+                  {
+                    "column": "steward"
+                  }
+                ],
+              "default": [{"user": 2}]
+            }
         }
     ]
 }

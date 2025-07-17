@@ -14,10 +14,17 @@
                 {"Data Owner":{"condition":"IS NULL", "field_type":  "OBJECT_SET"}}
             ],
             "fields_to_check_operator":"or",
-            "notification": {"type": "conversation",
-                             "subject": "Data Source without Steward(s) or Data Owner(s)",
-                             "frequency": "always",
-                             "to": [{"user": 2}]}
+            "notification": {
+               "type": "conversation",
+               "subject": "Data Source without Steward(s) or Data Owner(s)",
+               "frequency": "always",
+               "to": [
+                  {
+                    "column": "steward"
+                  }
+                ],
+                "default": [{"user": 2}]
+            }
         }
     ]
 }
